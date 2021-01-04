@@ -45,3 +45,32 @@ persp(x, y, fa, theta=30)
 persp(x, y, fa, theta=30, phi=20)
 persp(x, y, fa, theta=30, phi=70)
 persp(x, y, fa, theta=30, phi=40)
+# Reading in the Auto dataset from the website
+Auto = read.csv("/Users/anthonybernardi/Desktop/Auto.csv", header= TRUE, na.strings = "?")
+dim(Auto)
+# Throwing out missing data cases
+Auto_clean = na.omit(Auto)
+dim(Auto_clean)
+names(Auto)
+attach(Auto)
+plot(cylinders, mpg)
+# Making cylinders a categorical var 
+cylinders = as.factor(cylinders)
+plot(cylinders, mpg)
+# Customizing what's now a boxplot 
+plot(cylinders, mpg, col="red")
+plot(cylinders, mpg, col="red", varwidth=T)
+plot(cylinders, mpg, col="red", varwidth=T, horizontal=T)
+plot(cylinders, mpg, col="red", varwidth=T, xlab="cylinders", ylab="MPG")
+# Histograms
+hist(mpg)
+hist(mpg, col=2)
+# Similar to bins in python
+hist(mpg, col=2, breaks=15)
+pairs(Auto)
+pairs(~ mpg + displacement + horsepower + weight + acceleration, Auto)
+# Using the interactive identify 
+plot(horsepower, mpg)
+identify(horsepower, mpg, name)
+# Using summary
+summary(Auto)
