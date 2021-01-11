@@ -145,4 +145,105 @@ for (i in quant_cols) {
 
 str(auto_subset)
 savehistory()
-q()
+loadhistory()
+
+# Investigating some of the predictors graphically and seeing what we get 
+# Looking at our vars 
+colnames(Auto)
+# Scatter plots 
+plot(mpg, displacement)
+pairs(Auto)
+cylinders = as.factor(cylinders)
+Auto = data.frame(Auto, cylinders)
+plot(mpg, cylinders)
+pairs(~ cylinders + mpg + horsepower)
+plot(mpg, horsepower)
+plot(mpg, weight)
+plot(mpg, acceleration)
+plot(mpg, year)
+plot(mpg, cylinders)
+
+# Question 10
+# Grabbing the Boston data set 
+library(MASS)
+Boston
+colnames(Boston)
+?Boston
+dim(Boston)
+Boston[1:3,]
+# Making some pairwise scatterplots of the predictors 
+pairs(Boston)
+attach(Boston)
+pairs(~ crim + age + tax)
+pairs(~ black + indus + chas)
+str(Boston)
+?Boston
+pairs(~ tax + age + rad + chas)
+plot(tax, chas)
+plot(tax, age)
+plot(tax, ptratio)
+plot(tax, rad)
+?Boston
+plot(tax, zn)
+plot(tax, crim)
+# Determining if anythign is predictive of crime rate 
+colnames(Boston)
+plot(zn, crim)
+plot(tax, crim)
+plot(~ crim + zn + indus + chas+ nox + rm)
+plot(rm, crim)
+plot(~ crim + age + dis + rad + tax + ptratio + black + lstat + medv)
+# Look further into age, dis, black, lstat, and medv
+plot(age, crim)
+plot(dis, crim)
+plot(black, crim)
+# Maybe a slight positive relationship and then neg, respectively, for these last two 
+plot(lstat, crim)
+plot(medv, crim)
+?Boston
+# Looking if any of the towns have a high crime rate,
+# high tax rate, or high pupil-teacher ratios 
+# Looking at the ranges for each 
+range(crim)
+fivenum(crim)
+range(tax)
+fivenum(tax)
+mean(tax)
+range(ptratio)
+fivenum(ptratio)
+mean(ptratio)
+# Suburbs bound to the charles river 
+colnames(Boston)
+table(chas)
+# which suburb has the lowest median value of owner occupied homes?
+fivenum(medv)
+median(medv)
+# Finding which record has the lowest value 
+Boston[which(medv == min(medv)), ]
+dim(Boston)
+mean(tax)
+mean(ptratio)
+# Finding the distribution of rooms per dwelling
+fivenum(rm)
+rm_rounded = round(rm, 0)
+table(rm_rounded)
+# focusing on the 8+ rooms per dwelling group 
+eight_plus = Boston[round(rm,0) >= 8, ]
+dim(eight_plus)
+summary(eight_plus)
+summary(Boston)
+eight_plus_new = Boston[rm >= 8, ]
+summary(eight_plus_new)
+seven_plus_new = Boston[rm >= 7, ]
+pairs(eight_plus_new)
+# Some descriptive stats 
+# Comparing the dwellings above 8 rooms on average to the population 
+# Seems like affluence is the common factor based on group median & spread differences
+# Might be worth looking more into spread variables to strengthen our claim 
+summary(eight_plus_new$crim)
+fivenum(eight_plus_new$crim)
+summary(eight_plus_new$tax)
+summary(eight_plus_new$medv)
+summary(medv)
+summary(eight_plus_new$ptratio)
+summary(ptratio)
